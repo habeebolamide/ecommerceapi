@@ -15,6 +15,10 @@ const User = mongoose.model('user', mongoose.Schema({
     },
     password:{
         type:String
+    },
+    isAdmin: { 
+        type:Boolean,
+        default : false
     }
 })
 ) 

@@ -44,7 +44,7 @@ const login = (req, res, next) => {
               });
             }
             if (result) {
-              const token = jwt.sign({ _id: user._id }, 'A(56LDr', { expiresIn: '1h' });
+              const token = jwt.sign({ _id: user._id, isAdmin: user.isAdmin }, 'A(56LDr', { expiresIn: '1h' });
               res.json({
                 message: "Login Successful",
                 token: token,
