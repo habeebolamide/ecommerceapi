@@ -10,9 +10,6 @@ const getProduct = (req,res,next) => {
 
 
 const addProduct = (req, res, next) => {
-    // const { error } = validate(req.body); 
-    // if (error) return res.status(400).send(error.details[0].message);
-    console.log(req.user);
     let product = new Product ({
         product_name: req.body.product_name,
         product_img : `http://localhost:3005/${req.file.path}`,
