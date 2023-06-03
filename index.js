@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const express = require('express');
+require('dotenv').config();
 const user = require('./routes/users')
 const product = require('./routes/products')
 const cart = require('./routes/cart')
@@ -14,7 +15,7 @@ app.use('/api', product);
 app.use('/api', cart);
 
 
-mongoose.connect('mongodb://localhost/product').then(() => {
+mongoose.connect(process.env.MONGO_URI).then(() => {
     console.log('Connected Successfully');
 }).catch((err) => {
     console.log(err);
