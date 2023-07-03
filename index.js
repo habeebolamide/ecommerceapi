@@ -9,7 +9,7 @@ const app = express();
 
 app.use(express.json());
 app.use('/uploads', express.static('uploads'))
-app.use('/api', user);
+app.use('/api/auth', user);
 app.use(authenticate)
 app.use('/api', product);
 app.use('/api', cart);
