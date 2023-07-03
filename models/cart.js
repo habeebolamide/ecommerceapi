@@ -14,7 +14,10 @@ const Cart = mongoose.model('cart', mongoose.Schema({
         type:Number,
         default :1
     }  
-})
+},
+{timestamps : true}
+
+)
 ) 
 
 

@@ -8,6 +8,13 @@ const getProduct = (req,res,next) => {
     })
 }
 
+const getProductDetails = (req,res,next) => {
+    Product.findOne().then(product => {
+        res.json({
+            product
+        })
+    })
+}
 
 const addProduct = (req, res, next) => {
     let product = new Product ({
@@ -78,6 +85,7 @@ module.exports = {
     getProduct,
     addProduct,
     updateProduct,
-    deleteProducts
+    deleteProducts,
+    getProductDetails
 };
   

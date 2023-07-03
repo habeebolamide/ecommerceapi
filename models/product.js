@@ -20,7 +20,10 @@ const Product = mongoose.model('product', mongoose.Schema({
     numberInStock:{
         type:Number
     }
-})
+},
+{timestamps : true}
+
+)
 ) 
 
 // function validateProduct(product) {
