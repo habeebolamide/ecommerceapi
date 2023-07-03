@@ -4,18 +4,20 @@ const mongoose =  require('mongoose')
 const User = mongoose.model('user', mongoose.Schema({
     name :{
         type : String, 
-        required : true,
+        required : [true, 'Name is required'],
     },
     email :{
         type : String, 
-        required : true,
+        required : [true, 'Email is required'],
         unique:true
     },
     phone:{
-        type : String
+        type : String,
+        required : [true, 'Phone is required']
     },
     password:{
-        type:String
+        type:String,
+        required : [true, 'Password is required']
     },
     isAdmin: { 
         type:Boolean,
