@@ -1,12 +1,13 @@
 const mongoose = require('mongoose')
 const express = require('express');
 require('dotenv').config();
+const cors = require("cors");
 const user = require('./routes/users')
 const product = require('./routes/products')
 const cart = require('./routes/cart')
 const authenticate = require('./middleware/authenticate')
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'))
 app.use('/api/auth', user);

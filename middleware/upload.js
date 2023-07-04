@@ -3,11 +3,12 @@ const multer = require('multer');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Corrected parentheses placement
+    cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
     let ext = path.extname(file.originalname);
-    cb(null, file.originalname );
+    let fileName = file.originalname.replace(/\s+/g, ''); // Remove spaces from the file name
+    cb(null, fileName);
   },
 });
 
@@ -16,7 +17,7 @@ var upload = multer({
   fileFilter: function (req, file, callback) {
     if (
       file.mimetype == 'image/png' ||
-      file.mimetype == 'image/jpeg' // Corrected 'image/png' repeated
+      file.mimetype == 'image/jpeg'
     ) {
       callback(null, true);
     } else {

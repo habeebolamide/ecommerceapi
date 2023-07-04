@@ -9,7 +9,7 @@ const getProduct = (req,res,next) => {
 }
 
 const getProductDetails = (req,res,next) => {
-    Product.findOne().then(product => {
+    Product.findOne({_id:req.params.id}).then(product => {
         res.json({
             product
         })
@@ -17,6 +17,7 @@ const getProductDetails = (req,res,next) => {
 }
 
 const addProduct = (req, res, next) => {
+    // return console.log(req);
     let product = new Product ({
         product_name: req.body.product_name,
         product_img : `http://localhost:3005/${req.file.path}`,
