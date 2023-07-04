@@ -6,6 +6,6 @@ router.use(express.json())
 router.post('/register', AuthController.register)
       .post('/login', AuthController.login)
       .post('/forgot-password',AuthController.forgotpassword)
-      .post('/:userId/:token',AuthController.resetpassword)
+      .post('/password-reset/:userId/:token',AuthController.resetpassword)
 
 module.exports = router

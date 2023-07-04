@@ -7,6 +7,7 @@ const fs = require("fs");
 const sendEmail = require("../utils/sendmail");
 const crypto = require("crypto");
 const mail = fs.readFileSync("mail.html", "utf-8");
+const twilio = require("twilio");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   host: "smtp.forwardemail.net",
@@ -44,6 +45,15 @@ const register = (req, res, next) => {
         transporter.sendMail(details, (err) => {
           console.log(err);
         });
+        const accountSid = process.env.TWILIO_ACCOUNT_SID;
+        const authToken = process.env.TWILIO_AUTH_TOKEN;
+        const client = require("twilio")(accountSid, authToken);
+
+        client.messages.create({
+          body: "09876",
+          from: process.env.TWILIO_PHONE_NO,
+          to: req.body.phone,
+        });
         res.json({
           message: "User Added Sucessfully",
         });
@@ -79,8 +89,7 @@ const login = (req, res, next) => {
               message: "Login Successful",
               token: token,
             });
-          }
-           else {
+          } else {
             res.json({
               message: "Invalid password",
               error: err,
@@ -102,7 +111,10 @@ const login = (req, res, next) => {
 
 const forgotpassword = async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
-  if (!user) return res.status(400).json({message:"user with given email doesn't exist"});
+  if (!user)
+    return res
+      .status(400)
+      .json({ message: "user with given email doesn't exist" });
 
   let token = await Token.findOne({ userId: user._id });
   if (!token) {
@@ -112,7 +124,7 @@ const forgotpassword = async (req, res) => {
     }).save();
   }
 
-  const link = `http://localhost:8080/password-reset/${user._id}/${token.token}`;
+  const link = `${process.env.CLIENT_SERVER}/password-reset/${user._id}/${token.token}`;
   await sendEmail(
     user.email,
     "Password Reset Request",
@@ -143,16 +155,18 @@ const resetpassword = async (req, res) => {
         error: err,
       });
     }
-    User.findByIdAndUpdate( {_id:user._id}, {
-      password: hashedPass,
-  } ).then( result => {
+    User.findByIdAndUpdate(
+      { _id: user._id },
+      {
+        password: hashedPass,
+      }
+    ).then((result) => {
       token.deleteOne();
       res.json({
-          message : "password reset sucessfully"
-      })
-  })
+        message: "password reset sucessfully",
+      });
+    });
   });
-
 };
 module.exports = {
   register,
